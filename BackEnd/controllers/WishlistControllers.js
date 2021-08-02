@@ -6,10 +6,8 @@ const WishlistControllers = {
           if (!name) {
             return res.status(400).json({ error: "Plase add name to your Wishlist" });
           }
-    
           const newWishlist = await new wishlist({
            name,
-           
           });
           newWishlist.save().then((result) => {
             res.status(201).json({ result });
@@ -20,6 +18,8 @@ const WishlistControllers = {
         }
       },
 AllWishlist : async(req,res)=>{
+    const Wishlists = await wishlist.find();
+    res.json(Wishlists);
 },
 }
-module.exports = AuthControllers
+module.exports = WishlistControllers
