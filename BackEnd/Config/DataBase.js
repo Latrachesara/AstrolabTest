@@ -13,8 +13,8 @@ mongoose
   .then((data) => {
     console.log("we are connected to database");
   })
-  .catch(() => {
-    console.log("error");
+  .catch((error) => {
+    console.log(error);
   });
 
 module.exports = mongoose;

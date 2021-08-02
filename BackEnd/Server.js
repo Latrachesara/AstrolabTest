@@ -5,7 +5,7 @@ require("./Config/DataBase");
 
 const AuthRoute = require("./routers/AuthRoute");
 const UserRoute = require("./routers/UserRoute");
-const PostRoute = require("./routers/WishlistRoute");
+const WishlistRoute = require("./routers/WishlistRoute");
 const port = process.env.PORT || 4000;
 app.use(express());
 app.use(express.json());
