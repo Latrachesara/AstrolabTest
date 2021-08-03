@@ -1,5 +1,5 @@
 import React from 'react'
-import './../Style/Wishlist.css'
+import './../Style/Products.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
   
-function Whishlist() {
+function Products() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
   
@@ -39,7 +39,7 @@ function Whishlist() {
     return (
         <div className="box">
             <center>
-               <button  className="btn" onClick={handleOpen}><AddIcon style={{color:"#3C327B", paddingRight:"5%"}}/>AddwishList</button> 
+               <button  className="btn" onClick={handleOpen}><AddIcon style={{color:"#3C327B", paddingRight:"5%"}}/>Add Product</button> 
                <Modal 
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -55,8 +55,8 @@ function Whishlist() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <center><h2 id="transition-modal-title">Add WishList</h2></center>
-            <TextField id="outlined-basic" variant="outlined" label="wishlist name" style={{margin:"15%"}} />
+            <center><h2 id="transition-modal-title">Add Product</h2></center>
+            <TextField id="outlined-basic" variant="outlined" label="Product name" style={{margin:"15%"}} />
             <div className="btns"> <Button variant="contained" color="primary" disableElevation onClick={handleClose}>
       Cancel
     </Button> <Button variant="contained" color="primary" disableElevation >
@@ -76,4 +76,4 @@ function Whishlist() {
     )
 }
 
-export default Whishlist
+export default Products

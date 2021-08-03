@@ -21,8 +21,8 @@ function Home() {
             </div>
             <div className="buttons">
                 <center>
-                <button style={{color:"green"}}><EditIcon />   Edit</button>
-                <button style={{color:"red"}}><DeleteOutlineIcon />   delete</button></center>
+                <button style={{color:"green", backgroundColor: "white",border:"none"}}><EditIcon />   Edit</button>
+                <button style={{color:"red", backgroundColor: "white",border:"none"}}><DeleteOutlineIcon />   delete</button></center>
           </div></div>
 
           <Productlist />

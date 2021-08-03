@@ -12,7 +12,7 @@ function Navb() {
             <a href="/home"><FavoriteBorderIcon style={{marginTop:"1%"}}/>My Wishlist</a>
           </li>
           <li>
-            <a href=""><DescriptionRoundedIcon style={{marginTop:"1%"}}/>My Products</a>
+            <a href="/productHome"><DescriptionRoundedIcon style={{marginTop:"1%"}}/>My Products</a>
           </li>
           <li>
       <AccountCircleIcon style={{fontSize:"30px", marginLeft:"3000%", marginTop:"37%", color:"#3C327B" }}/>
