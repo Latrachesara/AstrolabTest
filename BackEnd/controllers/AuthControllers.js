@@ -9,7 +9,7 @@ const createAccessToken = (payload) => {
   };
 const AuthControllers = {
     Register : async(req,res)=>{
-    const {firstName, password, email } = req.body 
+    const {firstName, lastName, password, email } = req.body 
     try{
     const exist = await user.findOne({email}) 
 
@@ -20,7 +20,7 @@ const AuthControllers = {
         return res.status(400).json({message:"password less then 8 caracteres"}) 
     }
     const passwordHashed = await bcrypt.hash(password, 12)
-    const newUser = await new user ({ firstName, password:passwordHashed , email})
+    const newUser = await new user ({ firstName, lastName, password:passwordHashed , email})
     newUser.save ().then ((user)=>{
         const token = createAccessToken ({id: user._id})
         res.cookie("accessToken", token,{
@@ -62,6 +62,32 @@ catch (error){
     return res.status(400).json({message:error.message})
 }
    },
+   VerifiLoggedIn: async (req, res) => {
+    try {
+      const token = req.cookies.accessToken;
+      if (!token)
+        return res.status(400).json({ message: "There is no token !" });
+      jwt.verify(
+        token,
+        process.env.ACCESS_TOKEN_SECRET,
+        async (err, payload) => {
+          if (err) {
+            return res.status(400).json({ message: err.message });
+          } else {
+            const id = payload.id;
+            const User = await user.findById(id);
+            if (User) {
+              return res.status(200).json({ User, token });
+            } else {
+              return res.status(400).json({ message: "There is no token !" });
+            }
+          }
+        }
+      );
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
+    }
+  },
    logout : async (req, res)=> {
     res.clearCookie("token", { path: "/" });
     res.status(200).json({message:"user logout"})

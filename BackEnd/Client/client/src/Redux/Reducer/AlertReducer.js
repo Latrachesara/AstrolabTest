@@ -1,10 +1,10 @@
-import { GLOBALTYPES } from "./../actions/GlobalType";
+import { GLOBALTYPES } from "./../Actions/GlobalType";
 const inistialState = {
   error: null,
   msg: "",
   type: "",
 };
-const alertReducer = (state = inistialState, action) => {
+const AlertReducer = (state = inistialState, action) => {
   switch (action.type) {
     case GLOBALTYPES.ALERT:
       return {
@@ -17,4 +17,4 @@ const alertReducer = (state = inistialState, action) => {
       return state;
   }
 };
-export default alertReducer;
+export default AlertReducer;

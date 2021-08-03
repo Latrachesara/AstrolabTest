@@ -1,4 +1,4 @@
-import { GLOBALTYPES } from './../Actions/GlobalType'
+import { GLOBALTYPES } from './../Actions/GlobalType';
 
 const inistialState = {
   accessToken: "",
