@@ -5,18 +5,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserHistory} from "history";
-
+import DataProvider from "./Redux/Store";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>
-
+<DataProvider>
     <Router routes={App} history={history}>
       <Route path="/">
         <App />
       </Route>
     </Router>
-
+    </DataProvider>
 </React.StrictMode>,
   document.getElementById('root')
 );
