@@ -39,7 +39,7 @@ function Whishlist() {
     return (
         <div className="box">
             <center>
-               <button  className="btn" onClick={handleOpen}><AddIcon style={{color:"#3C327B", paddingRight:"5%"}}/>AddwishList</button> 
+               <button  className="btn" onClick={handleOpen}><AddIcon style={{color:"#3C327B", paddingRight:"5%"}}/>Add wishList</button> 
                <Modal 
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
