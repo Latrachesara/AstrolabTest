@@ -1,10 +1,11 @@
 
 .boxprod {
-  width: 75%;
+  width: 95%;
 margin-left: 2%;
+
 }
 .grid-cont {
-  
+  padding-left: 3%;
     display: grid;
     grid-template-columns: 20% 10% 50% 10% 10%;
     border: 1px solid lightgray;

@@ -35,3 +35,10 @@ li a{
 .btns{
   float: right;
 }
+
+button{
+  padding:3%;
+  background-color: white;
+  border: none;
+  font-size: medium;
+}
