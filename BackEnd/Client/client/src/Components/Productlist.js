@@ -2,7 +2,7 @@ import React from 'react'
 import "./../Style/Productlist.css"
 function Productlist() {
     return (
-        <div >
+        <div className="boxprod">
             <div className="grid-cont">
               
                 <div><h4>foto</h4></div>

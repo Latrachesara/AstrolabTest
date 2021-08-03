@@ -1,10 +1,12 @@
-body {
-  width: 100%;
+
+.boxprod {
+  width: 75%;
+margin-left: 2%;
 }
 .grid-cont {
+  
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
-
+    grid-template-columns: 20% 10% 50% 10% 10%;
     border: 1px solid lightgray;
 
   
