@@ -1,7 +1,37 @@
+
 .box {
-  width: 60%;
-  border: 3px solid lightgray;
+  border: 1px solid lightgray;
+  height:260%;
+  width: 40%;
+ 
+}
+.btn {
+  padding: 5%;
+  color :#3C327B;
+  background-color: white;
+  border-radius: 4%;
+  border-color: #3C327B;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  width:100%;
+}
+.btn:hover {
+  border-color: lightgray;
   
-  height:700%;
-  margin: 1%;
+}
+ul {
+  list-style-type: none;
+  background-color: white;
+}
+li a{
+  display: block;
+  color: #3C327B;
+ 
+  text-decoration: none;
+}
+
+.btns{
+  float: right;
 }

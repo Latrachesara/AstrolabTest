@@ -1,14 +1,16 @@
 import React from 'react'
 import "./../../Style/Home.css"
 import Wishlist from '../../Components/Wishlist'
+import Productlist from './../../Components/Productlist'
+
 
 function Home() {
     return (
-        <div class="grid-container">
+        <div class="wrapper">
         <div><Wishlist /></div>
-        <div>2</div>
-         
-            
+       <div><Productlist /></div> 
+   
+          
         </div>
     )
 }

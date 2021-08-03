@@ -1,8 +1,9 @@
-.grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: 80px 200px;
-    grid-gap: 10px;
-    padding: 10px;
-  }
+body{
+  width: "100%";
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: auto auto;
+ 
+}
   
