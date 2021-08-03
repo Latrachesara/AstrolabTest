@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 import './../../Style/SignUp.css';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +10,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Boutton from '../../Components/Boutton';
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "./../../Redux/Actions/AuthActions";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +23,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Signup() {
+  const inistialData = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+   
+  };
+  const [data, setData] = useState(inistialData);
+  const HandleChange = (value, name) => {
+    setData({ ...data, [name]: value });
+  };
+
+  const dispatch = useDispatch();
+  const { alert } = useSelector((state) => state);
+  const HandleSubmit = () => {
+    dispatch(register(data));
+  };
     const classes = useStyles();
     const handleChange = (prop) => (event) => {
       setValues({ ...values, [prop]: event.target.value });
@@ -45,13 +65,14 @@ function Signup() {
       </Avatar>
         <div  className="body">
             <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="standard-basic" label="First Name" />
-      <TextField id="standard-basic" label="Last Name" />
-      <TextField id="standard-basic" style={{width:"80%", margin:"2%"}} label="Email" placeholder="example@example"/>
+      <TextField id="standard-basic" label="First Name" onChange={(e) => {HandleChange(e.target.value, e.target.name)}} />
+      <TextField id="standard-basic" label="Last Name" onChange={(e) => {HandleChange(e.target.value, e.target.name)}}/>
+      <TextField id="standard-basic" style={{width:"80%", margin:"2%"}} label="Email" placeholder="example@example" onChange={(e) => {HandleChange(e.target.value, e.target.name)}}/>
       <div><Input style={{width:"180%", margin:"2%"}}
             id="standard-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
+            onChange={(e) => {HandleChange(e.target.value, e.target.name)}}
             onChange={handleChange('password')}
             endAdornment={
               <InputAdornment position="end">
@@ -85,7 +106,9 @@ function Signup() {
             }
           /></div>
           <div>
-            <Boutton />
+            <Boutton    onClick={() => {
+                      HandleSubmit();
+                    }}/>
             <a className="account" href="/login">i already have an account</a>
           </div>
    

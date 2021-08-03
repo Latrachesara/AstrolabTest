@@ -1,4 +1,4 @@
-import { PostData, GetData } from "./../../Utils/APICalls";
+import { PostData, GetData } from "./../../Tools/APICalls"
 import { GLOBALTYPES } from "./GlobalType";
 import { AUTHTYPES } from "./../Reducer/AuthReducer";
 

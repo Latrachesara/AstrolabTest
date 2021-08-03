@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Whishlist() {
+function Productlist() {
     return (
         <div>
             
@@ -8,4 +8,4 @@ function Whishlist() {
     )
 }
 
-export default Whishlist
+export default Productlist
