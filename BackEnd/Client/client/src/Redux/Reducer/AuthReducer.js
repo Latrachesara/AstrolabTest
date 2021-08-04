@@ -1,4 +1,4 @@
-import { GLOBALTYPES } from './../Actions/GlobalType';
+import { GLOBALTYPES } from "./../Actions/GlobalType";
 
 const inistialState = {
   accessToken: "",
@@ -12,7 +12,7 @@ export const AUTHTYPES = {
   NOTLOGGED: "NOTLOGGEDIN",
   LOGIN_SUCCED: "LOGIN_SUCCED",
   LOGIN_FAIL: "LOGIN_FAIL",
-  LOGOUT :"LOGOUT",
+  LOGOUT: "LOGOUT",
 };
 
 const AuthReducer = (state = inistialState, action) => {
@@ -30,12 +30,12 @@ const AuthReducer = (state = inistialState, action) => {
         error: true,
         msg: action.payload.msg,
       };
-      case AUTHTYPES.LOGOUT:
-        return {
-          ...state,
-          isLoggedIn: false,
-          user: null,
-        };
+    case AUTHTYPES.LOGOUT:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+      };
     case AUTHTYPES.LOGIN_SUCCED:
       return {
         ...state,

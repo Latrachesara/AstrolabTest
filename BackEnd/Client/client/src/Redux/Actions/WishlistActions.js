@@ -1,11 +1,11 @@
 import { PostData, GetData } from "./../../Tools/APICalls";
 import { GLOBALTYPES } from "./GlobalType";
-import { WISHLISTTYPES  } from "./../Reducer/WishlistReducer";
+import { WISHLISTTYPES } from "./../Reducer/WishlistReducer";
 
 export const CreateWishlist = (data) => async (dispatch) => {
   await PostData(`/creation/wishlist`, data)
     .then((res) => {
-      dispatch({ type: WISHLISTTYPES .CREATE_WISHLIST, payload: res.data });
+      dispatch({ type: WISHLISTTYPES.CREATE_WISHLIST, payload: res.data });
     })
     .catch((err) => {
       dispatch({

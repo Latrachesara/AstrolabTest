@@ -1,10 +1,10 @@
-import './App.css';
+import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { VerifIsLoggedIn } from "./Redux/Actions/AuthActions";
-import { useEffect } from "react"
-import SafeRouter from './Router/SafeRouter';
-import Router from "./Router/Router"
-import Signin from './Pages/Auth/Signin';
+import { useEffect } from "react";
+import SafeRouter from "./Router/SafeRouter";
+import Router from "./Router/Router";
+
 function App() {
   const { Auth } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -12,9 +12,8 @@ function App() {
     dispatch(VerifIsLoggedIn());
   }, [dispatch]);
 
-
   return (
-    <div >
+    <div>
       {!Auth.isLoggedIn && <SafeRouter />}
       {Auth.isLoggedIn && <Router />}
     </div>

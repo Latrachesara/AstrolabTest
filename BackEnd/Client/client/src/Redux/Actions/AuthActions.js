@@ -60,15 +60,12 @@ export const VerifIsLoggedIn = () => async (dispatch) => {
     });
 };
 export const Logout = () => async (dispatch) => {
+  console.log("logout action")
+  await PostData("logout").then((res) => {
+    console.log(res);
 
-  await PostData("logout")
-    .then((res) => {
-      console.log(res);
-
-      dispatch({
-        type: GLOBALTYPES.LOGOUT,
-        });
-    })
-  
+    dispatch({
+      type: GLOBALTYPES.LOGOUT,
+    });
+  });
 };
-

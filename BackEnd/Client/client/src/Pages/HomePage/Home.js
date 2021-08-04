@@ -3,8 +3,9 @@ import "./../../Style/Home.css";
 import Wishlist from "../../Components/Wishlist";
 import Productlist from "./../../Components/Productlist";
 import Navb from "../../Components/Navb";
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import NavWishlist from "../../Components/NavWishlist";
 import "./../../Style/Navb.css";
 function Home() {
   return (
@@ -20,11 +21,30 @@ function Home() {
               <h2>Wishlist 1</h2>
             </div>
             <div className="buttons">
-                <center>
-                <button style={{color:"green", backgroundColor: "white",border:"none"}}><EditIcon />   Edit</button>
-                <button style={{color:"red", backgroundColor: "white",border:"none"}}><DeleteOutlineIcon />   delete</button></center>
-          </div></div>
-
+              <center>
+                <button
+                  style={{
+                    color: "green",
+                    backgroundColor: "white",
+                    border: "none",
+                  }}
+                >
+                  <EditIcon /> Edit
+                </button>
+                <button
+                  style={{
+                    color: "red",
+                    backgroundColor: "white",
+                    border: "none",
+                  }}
+                >
+                  <DeleteOutlineIcon /> delete
+                </button>
+              </center>
+            </div>
+          </div>
+          
+<NavWishlist />
           <Productlist />
         </div>
       </div>

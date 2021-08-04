@@ -1,43 +1,39 @@
-
 .box {
   border: 1px solid lightgray;
-  height:260%;
- 
- 
+  height: 200%;
 }
 .btn {
   padding: 5%;
-  color :#3C327B;
+  color: #3c327b;
   background-color: white;
   border-radius: 4%;
-  border-color: #3C327B;
+  border-color: #3c327b;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 20px;
-  width:100%;
+  width: 100%;
 }
 .btn:hover {
   border-color: lightgray;
-  
 }
 ul {
   list-style-type: none;
   background-color: white;
 }
-li a{
+li a {
   display: block;
-  color: #3C327B;
- 
+  color: #3c327b;
+
   text-decoration: none;
 }
 
-.btns{
+.btns {
   float: right;
 }
 
-button{
-  padding:3%;
-  
+button {
+  padding: 3%;
+
   font-size: medium;
 }

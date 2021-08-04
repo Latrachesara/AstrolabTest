@@ -1,6 +1,6 @@
 import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
-import Alert from '@material-ui/lab/Alert';
+import Alert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({

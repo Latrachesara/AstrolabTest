@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color:white;
+    background-color:teal;
     border : 1px solid lightgray;
   }
   
@@ -13,7 +13,7 @@
   
   .navb li a {
     display: block;
-    color: #3C327B;;
+    color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -21,12 +21,12 @@
   }
   
   .navb li a:hover:not(.active) {
-    background-color: #3C327B;
-    color:white;
+    background-color: white;
+    color:teal;
   }
   
   .active {
-    background-color: #3C327B;
+    background-color: white;
   }
   button {
 background-color: white;
