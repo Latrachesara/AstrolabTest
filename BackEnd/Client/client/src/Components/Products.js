@@ -8,6 +8,11 @@ import Elementwish from "./../Components/Elementwish";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -19,11 +24,24 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid blue",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2),
-    width: "30%",
+    width: "50%",
+  },
+  formControl: {
+ 
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 
 function Products() {
+
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -58,12 +76,35 @@ function Products() {
               <center>
                 <h2 id="transition-modal-title">Add Product</h2>
               </center>
-              <TextField
+              <form>
+             <div><TextField
                 id="outlined-basic"
                 variant="outlined"
-                label="Product name"
-                style={{ margin: "15%" }}
-              />
+                label="Name"
+                
+              /><TextField
+              id="outlined-basic"
+              variant="outlined"
+              label="Price"
+             
+            />
+             <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-outlined-label">Currency</InputLabel>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          value={age}
+          onChange={handleChange}
+          label="Currency"
+        >
+         
+          <MenuItem value={10}>TND</MenuItem>
+          <MenuItem value={20}>USD</MenuItem>
+          <MenuItem value={30}>EURO</MenuItem>
+        </Select>
+      </FormControl></div> 
+      <TextareaAutosize style={{borderColor:"lightgray", marginTop:"2%"}} aria-label="minimum height" minRows={4}  placeholder="Description" />
+      </form>
               <div className="btns">
                 {" "}
                 <Button
