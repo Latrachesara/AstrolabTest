@@ -28,3 +28,8 @@
   .active {
     background-color: #3C327B;
   }
+  button {
+background-color: white;
+border: none;
+color :#3C327B;
+  }

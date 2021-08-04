@@ -5,6 +5,7 @@ export const GLOBALTYPES = {
     VERIF_LOGGED_IN: "VERIF_LOGGED_IN",
     LOADING_ON: "LOADING_ON",
     LOADING_OFF: "LOADING_OFF",
+   LOGOUT :"LOGOUT",
   };
   
   export const EditData = (data, id, post) => {

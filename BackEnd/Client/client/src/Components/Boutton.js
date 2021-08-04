@@ -1,11 +1,17 @@
-import React from 'react';
-import './Boutton.css'
-function Boutton() {
-    return (
-        <div>
-            <button class="button button3">Sign up</button>
-        </div>
-    )
+import React, { useEffect } from "react";
+import "./Boutton.css";
+function Boutton({ Send }) {
+  return (
+    <button
+      type="button"
+      className="button button3"
+      onClick={() => {
+        Send();
+      }}
+    >
+      Sign up
+    </button>
+  );
 }
 
-export default Boutton
+export default Boutton;

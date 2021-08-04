@@ -1,20 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import Signin from "../Pages/Auth/Signin";
-import Signup from "../Pages/Auth/Signup";
 import Home from "../Pages/HomePage/Home";
-import ProductHome from "../Pages/HomePage/ProductHome";
+import NotFound from "../Components/NoFound"
 function Router() {
   return (
     <div>
       <Switch>
-        <Route exact path="/login" component={Signin} />
-        <Route exact path="/register" component={Signup} />
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/productHome" component={ProductHome} />
+        <Route exact path="/" component={Home} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
 }
-
 export default Router;

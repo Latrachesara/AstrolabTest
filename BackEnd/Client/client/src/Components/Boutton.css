@@ -14,4 +14,22 @@
     border-radius: 8px;
     
   }
+  @media screen and (max-width: 992px) {
+    .button {
+      background-color: #3D3571; /* Green */
+      border: none;
+      color: white;
+      width:185%;
+      padding: 6%;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 100%;
+      margin-top: 10%;
+      margin-left: 15%;
+      cursor: pointer;
+      border-radius: 8px;
+      
+    }
+  }
   

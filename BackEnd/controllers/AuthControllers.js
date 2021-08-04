@@ -22,12 +22,7 @@ const AuthControllers = {
     const passwordHashed = await bcrypt.hash(password, 12)
     const newUser = await new user ({ firstName, lastName, password:passwordHashed , email})
     newUser.save ().then ((user)=>{
-        const token = createAccessToken ({id: user._id})
-        res.cookie("accessToken", token,{
-            httpOnly: true,
-            path: "/",
-            maxAge: 30 * 24 * 60 * 60 * 1000, //30days
-          } )
+        
         return res.status(200).json({message:"user created successfully", token})
     })
     .catch ((err)=>{
