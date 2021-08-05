@@ -51,7 +51,7 @@ export const VerifIsLoggedIn = () => async (dispatch) => {
     .then((res) => {
       console.log(res);
       dispatch({ type: AUTHTYPES.LOGGEDIN, payload: res.data });
-      dispatch({ type: GLOBALTYPES.LOADING_OFF });
+      dispatch({ type: GLOBALTYPES.LOADING_ON });
     })
     .catch((err) => {
       dispatch({
