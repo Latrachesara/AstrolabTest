@@ -7,7 +7,7 @@ function LoadingComponent() {
       <center>
         <CircularProgress
           disableShrink
-          style={{ color: "teal", width: "5%", height: "5%", marginTop: "10%" }}
+          style={{ color: "teal"}}
         />
       </center>
     </div>

@@ -6,11 +6,14 @@ import DescriptionRoundedIcon from "@material-ui/icons/DescriptionRounded";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Popover from "@material-ui/core/Popover";
+import IconButton from '@material-ui/core/IconButton';
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../Redux/Actions/AuthActions";
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { useHistory } from "react-router-dom";
+
 function Navb() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -36,13 +39,14 @@ function Navb() {
           <PopupState variant="popover" popupId="demo-popup-popover">
             {(popupState) => (
               <div>
+              
                 <li>
                   <AccountCircleIcon
                     variant="contained"
                     {...bindTrigger(popupState)}
                     style={{
                       fontSize: "30px",
-                      marginLeft: "3000%",
+                      marginLeft: "2800%",
                       marginTop: "37%",
                       color: "gold",
                     }}
@@ -80,6 +84,9 @@ function Navb() {
               </div>
             )}
           </PopupState>
+          <li><IconButton style={{color:"gold",   marginLeft: "1200%",}}>
+        <KeyboardArrowDownIcon fontSize="large" />
+      </IconButton></li>
         </ul>
       </div>
     </div>
