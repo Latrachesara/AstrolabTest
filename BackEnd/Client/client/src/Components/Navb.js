@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../Redux/Actions/AuthActions";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { useHistory } from "react-router-dom";
-
 function Navb() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -84,7 +83,7 @@ function Navb() {
               </div>
             )}
           </PopupState>
-          <li><IconButton style={{color:"gold",   marginLeft: "1200%",}}>
+          <li><IconButton style={{color:"gold",   marginLeft: "1200%"}}>
         <KeyboardArrowDownIcon fontSize="large" />
       </IconButton></li>
         </ul>

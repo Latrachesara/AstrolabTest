@@ -1,30 +1,29 @@
 import "./../Style/Productlist.css";
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { withStyles } from '@material-ui/core/styles';
-import TableCell from '@material-ui/core/TableCell';
-import Paper from '@material-ui/core/Paper';
-import { AutoSizer, Column, Table } from 'react-virtualized';
+import React from "react";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { withStyles } from "@material-ui/core/styles";
+import TableCell from "@material-ui/core/TableCell";
+import Paper from "@material-ui/core/Paper";
+import { AutoSizer, Column, Table } from "react-virtualized";
 
 const styles = (theme) => ({
   flexContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    boxSizing: 'border-box',
+    display: "flex",
+    alignItems: "center",
+    boxSizing: "border-box",
   },
   table: {
-  
-    '& .ReactVirtualized__Table__headerRow': {
+    "& .ReactVirtualized__Table__headerRow": {
       flip: false,
-      paddingRight: theme.direction === 'rtl' ? '0 !important' : undefined,
+      paddingRight: theme.direction === "rtl" ? "0 !important" : undefined,
     },
   },
   tableRow: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   tableRowHover: {
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.grey[200],
     },
   },
@@ -32,14 +31,14 @@ const styles = (theme) => ({
     flex: 1,
   },
   noClick: {
-    cursor: 'initial',
+    cursor: "initial",
   },
 });
 
 class MuiVirtualizedTable extends React.PureComponent {
   static defaultProps = {
     headerHeight: 40,
-    rowHeight:5,
+    rowHeight: 5,
   };
 
   getRowClassName = ({ index }) => {
@@ -60,7 +59,11 @@ class MuiVirtualizedTable extends React.PureComponent {
         })}
         variant="body"
         style={{ height: rowHeight }}
-        align={(columnIndex != null && columns[columnIndex].numeric) || false ? 'right' : 'left'}
+        align={
+          (columnIndex != null && columns[columnIndex].numeric) || false
+            ? "right"
+            : "left"
+        }
       >
         {cellData}
       </TableCell>
@@ -73,10 +76,14 @@ class MuiVirtualizedTable extends React.PureComponent {
     return (
       <TableCell
         component="div"
-        className={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
+        className={clsx(
+          classes.tableCell,
+          classes.flexContainer,
+          classes.noClick
+        )}
         variant="head"
         style={{ height: headerHeight }}
-        align={columns[columnIndex].numeric || false ? 'right' : 'left'}
+        align={columns[columnIndex].numeric || false ? "right" : "left"}
       >
         <span>{label}</span>
       </TableCell>
@@ -84,7 +91,8 @@ class MuiVirtualizedTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, columns, rowHeight, headerHeight, ...tableProps } = this.props;
+    const { classes, columns, rowHeight, headerHeight, ...tableProps } =
+      this.props;
     return (
       <AutoSizer>
         {({ height, width }) => (
@@ -93,7 +101,7 @@ class MuiVirtualizedTable extends React.PureComponent {
             width={width}
             rowHeight={rowHeight}
             gridStyle={{
-              direction: 'inherit',
+              direction: "inherit",
             }}
             headerHeight={headerHeight}
             className={classes.table}
@@ -132,7 +140,7 @@ MuiVirtualizedTable.propTypes = {
       label: PropTypes.string.isRequired,
       numeric: PropTypes.bool,
       width: PropTypes.number.isRequired,
-    }),
+    })
   ).isRequired,
   headerHeight: PropTypes.number,
   onRowClick: PropTypes.func,
@@ -141,13 +149,12 @@ MuiVirtualizedTable.propTypes = {
 
 const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
-
 const sample = [
-  ['Frozen yoghurt', 159, 6.0, 24, 4.0],
-  ['Ice cream sandwich', 237, 9.0, 37, 4.3],
-  ['Eclair', 262, 16.0, 24, 6.0],
-  ['Cupcake', 305, 3.7, 67, 4.3],
-  ['Gingerbread', 356, 16.0, 49, 3.9],
+  ["Frozen yoghurt", 159, 6.0, 24, 4.0],
+  ["Ice cream sandwich", 237, 9.0, 37, 4.3],
+  ["Eclair", 262, 16.0, 24, 6.0],
+  ["Cupcake", 305, 3.7, 67, 4.3],
+  ["Gingerbread", 356, 16.0, 49, 3.9],
 ];
 
 function createData(id, dessert, calories, fat, carbs, protein) {
@@ -163,38 +170,35 @@ for (let i = 0; i < 200; i += 1) {
 
 function Productlist() {
   return (
-    <Paper style={{ height: 250, width: '80%', marginLeft:"5%" }}>
+    <Paper style={{ height: 250, width: "80%", marginLeft: "5%" }}>
       <VirtualizedTable
         rowCount={rows.length}
         rowGetter={({ index }) => rows[index]}
         columns={[
           {
             width: 160,
-            label: 'Foto',
-            dataKey: 'foto',
+            label: "Foto",
+            dataKey: "foto",
           },
           {
             width: 150,
-            label: 'Title',
-            dataKey: 'title',
-          
+            label: "Title",
+            dataKey: "title",
           },
           {
             width: 220,
-            label: 'Description',
-            dataKey: 'description',
-         
+            label: "Description",
+            dataKey: "description",
           },
           {
             width: 120,
-            label: 'Status',
-            dataKey: 'status',
-        
+            label: "Status",
+            dataKey: "status",
           },
           {
             width: 120,
-            label: 'Price',
-            dataKey: 'price',
+            label: "Price",
+            dataKey: "price",
             numeric: true,
           },
         ]}

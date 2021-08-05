@@ -1,13 +1,18 @@
 import React from "react";
 import "./../Style/ProductDetails.css";
+import InfoIcon from "@material-ui/icons/Info";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Button from "@material-ui/core/Button";
+import Fade from "@material-ui/core/Fade";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -30,8 +35,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ProductDetails() {
-  const classes = useStyles();
   const [wishlist, setWishlist] = React.useState("");
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange1 = (event) => {
     setWishlist(event.target.value);
@@ -79,22 +93,58 @@ function ProductDetails() {
               <MenuItem value={30}>wishlist 3</MenuItem>
             </Select>
           </FormControl>
-        
         </div>
-       </div>
+      </div>
       <div>
-      <div className="iconBtn"><IconButton >
-        <EditIcon fontSize="large" style={{color:"green"}}/>
-      </IconButton>
-          <IconButton >
-        <DeleteIcon fontSize="large" style={{color:"red"}}/>
-      </IconButton>
-      
-          </div>
+        <div className="iconBtn">
+          <IconButton>
+            <EditIcon fontSize="large" style={{ color: "green" }} />
+          </IconButton>
+          <IconButton onClick={handleOpen}>
+            <DeleteIcon fontSize="large" style={{ color: "red" }} />
+          </IconButton>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <div className={classes.paper}>
+                <h2 id="transition-modal-title">Delete Product</h2>
+                <center>
+                  <InfoIcon fontSize="large" style={{ color: "gray" }} />
+                  <h3 style={{ color: "gray" }}>
+                    Are u sure to delete this Product ?
+                  </h3>
+                </center>
+                <div className="btns">
+                  {" "}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>{" "}
+                  <Button variant="contained" color="primary" disableElevation>
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            </Fade>
+          </Modal>
+        </div>
         <h1>Product 1 </h1>
         <p>desciption desciption desciption desciption </p>
         <h3>Price :</h3> <p>300$</p>
-    
       </div>
     </div>
   );
