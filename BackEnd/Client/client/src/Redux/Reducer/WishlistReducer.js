@@ -7,7 +7,7 @@ export const WISHLISTTYPES = {
 };
 const WishlistReducer = (state = InisitalState, action) => {
   switch (action.type) {
-    case POSTTYPES.CREATE_WISHLIST:
+    case WISHLISTTYPES.CREATE_WISHLIST:
       return {};
     default:
       return state;

@@ -31,6 +31,7 @@ export const Login = (data, history) => async (dispatch) => {
       console.log(res);
       history.push("/");
       dispatch({ type: AUTHTYPES.LOGIN_SUCCED, payload: res.data });
+      dispatch({ type: GLOBALTYPES.LOADING_ON });
     })
     .catch((err) => {
       dispatch({
@@ -41,6 +42,7 @@ export const Login = (data, history) => async (dispatch) => {
           type: "LOGIN",
         },
       });
+      dispatch({ type: GLOBALTYPES.LOADING_OFF });
     });
 };
 
@@ -60,7 +62,7 @@ export const VerifIsLoggedIn = () => async (dispatch) => {
     });
 };
 export const Logout = () => async (dispatch) => {
-  console.log("logout action")
+  console.log("logout action");
   await PostData("logout").then((res) => {
     console.log(res);
 

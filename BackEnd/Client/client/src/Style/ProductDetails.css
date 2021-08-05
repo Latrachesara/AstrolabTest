@@ -1,13 +1,19 @@
 .wrapperProduct {
-    display: grid;
-    grid-template-columns:60% auto ;
-   
-  }
-  img{
-      width: 70%;
-      height: auto;
-  }
-  .images {
-      margin-top:10%;
-      margin-left: 10%;
-  }
+  display: grid;
+  grid-template-columns: 60% auto;
+  margin-top: 3%;
+}
+img {
+  width: 70%;
+  height: auto;
+}
+.images {
+  margin-top: 10%;
+  margin-left: 10%;
+}
+.select {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 50%;
+  margin-bottom: 10%;
+}

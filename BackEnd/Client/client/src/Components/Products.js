@@ -10,10 +10,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -87,7 +86,9 @@ function Products() {
               </center>
               <form>
                 <div>
-                  <div className="foto"><AddAPhotoIcon fontSize="large" /></div>
+                  <div className="foto">
+                    <AddAPhotoIcon fontSize="large" />
+                  </div>
                   <TextField
                     id="outlined-basic"
                     variant="outlined"
