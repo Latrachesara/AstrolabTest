@@ -14,7 +14,7 @@ const UserControllers = {
       return res.status(400).json({ message: error.message });
     }
   },
-  
+
   getAllUsers: async (req, res) => {
     const Users = await user.find();
     res.json(Users);

@@ -8,11 +8,12 @@ import Elementwish from "./../Components/Elementwish";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -27,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     width: "50%",
   },
   formControl: {
- 
     minWidth: 120,
   },
   selectEmpty: {
@@ -36,11 +36,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Products() {
+  const [wishlist, setWishlist] = React.useState("");
 
-  const [age, setAge] = React.useState('');
+  const handleChange1 = (event) => {
+    setWishlist(event.target.value);
+  };
+  const [currency, setCurrency] = React.useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setCurrency(event.target.value);
+  };
+  const [status, setStatus] = React.useState("");
+
+  const handleChange2 = (event) => {
+    setStatus(event.target.value);
   };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -77,34 +86,92 @@ function Products() {
                 <h2 id="transition-modal-title">Add Product</h2>
               </center>
               <form>
-             <div><TextField
-                id="outlined-basic"
-                variant="outlined"
-                label="Name"
-                
-              /><TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="Price"
-             
-            />
-             <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">Currency</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={age}
-          onChange={handleChange}
-          label="Currency"
-        >
-         
-          <MenuItem value={10}>TND</MenuItem>
-          <MenuItem value={20}>USD</MenuItem>
-          <MenuItem value={30}>EURO</MenuItem>
-        </Select>
-      </FormControl></div> 
-      <TextareaAutosize style={{borderColor:"lightgray", marginTop:"2%"}} aria-label="minimum height" minRows={4}  placeholder="Description" />
-      </form>
+                <div>
+                  <div className="foto"><AddAPhotoIcon fontSize="large" /></div>
+                  <TextField
+                    id="outlined-basic"
+                    variant="outlined"
+                    label="Name"
+                    style={{ paddingRight: "1%" }}
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    variant="outlined"
+                    label="Price"
+                    style={{ paddingRight: "1%" }}
+                  />
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Currency
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={currency}
+                      onChange={handleChange}
+                      label="Currency"
+                    >
+                      <MenuItem value={10}>TND</MenuItem>
+                      <MenuItem value={20}>USD</MenuItem>
+                      <MenuItem value={30}>EURO</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div>
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Description"
+                    multiline
+                    rows={2}
+                    placeholder="Description"
+                    variant="outlined"
+                    style={{ width: "95%", marginTop: "2%" }}
+                  />
+                </div>
+                <div className="selects">
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Status
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={status}
+                      onChange={handleChange2}
+                      label="Status"
+                      style={{ marginRight: "30%" }}
+                    >
+                      <MenuItem value={10}>To Buy</MenuItem>
+                      <MenuItem value={20}>Bought</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Wishlist
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined1"
+                      value={wishlist}
+                      onChange={handleChange1}
+                      label="Wishlist"
+                    >
+                      <MenuItem value={10}>wishlist 1</MenuItem>
+                      <MenuItem value={20}>wishlist 2</MenuItem>
+                      <MenuItem value={30}>wishlist 3</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </form>
               <div className="btns">
                 {" "}
                 <Button

@@ -8,6 +8,7 @@ const createAccessToken = (payload) => {
     });
   };
 const AuthControllers = {
+
     Register : async(req,res)=>{
     const {firstName, lastName, password, email } = req.body 
     try{
@@ -33,6 +34,7 @@ const AuthControllers = {
         return res.status(400).json({message:error.message})
     }
    },
+
    login : async(req, res) => {
      const {email, password}  = req.body
      try {
@@ -57,6 +59,7 @@ catch (error){
     return res.status(400).json({message:error.message})
 }
    },
+
    VerifiLoggedIn: async (req, res) => {
     try {
       const token = req.cookies.accessToken;
@@ -83,8 +86,9 @@ catch (error){
       return res.status(400).json({ message: err.message });
     }
   },
+  
    logout : async (req, res)=> {
-    res.clearCookie("token", { path: "/" });
+    res.clearCookie("accessToken", { path: "/" });
     res.status(200).json({message:"user logout"})
    }
 }

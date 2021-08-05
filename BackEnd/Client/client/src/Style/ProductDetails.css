@@ -1,0 +1,13 @@
+.wrapperProduct {
+    display: grid;
+    grid-template-columns:60% auto ;
+   
+  }
+  img{
+      width: 70%;
+      height: auto;
+  }
+  .images {
+      margin-top:10%;
+      margin-left: 10%;
+  }
