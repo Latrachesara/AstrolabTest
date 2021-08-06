@@ -11,9 +11,10 @@ function ProductHome() {
       <div class="wrapper">
         <div>
           <Products />
-          
         </div>
-        <div><ProductDetails /></div>
+        <div>
+          <ProductDetails />
+        </div>
       </div>
     </div>
   );

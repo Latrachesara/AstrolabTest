@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./../Style/Wishlist.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
@@ -8,6 +8,11 @@ import Elementwish from "./../Components/Elementwish";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import {
+  GettAllWishList,
+  CreateWishlist,
+} from "./../Redux/Actions/WishlistActions";
+import { useDispatch, useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -25,14 +30,23 @@ const useStyles = makeStyles((theme) => ({
 
 function Whishlist() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const Wishlist = useSelector((state) => state.Wishlist);
+  useEffect(() => {
+    dispatch(GettAllWishList());
+  }, [dispatch]);
   const [open, setOpen] = React.useState(false);
-
+  const [name, setName] = useState("");
   const handleOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const CreateOneList = () => {
+    dispatch(CreateWishlist({ name }));
+    setName("");
   };
   return (
     <div className="box">
@@ -63,6 +77,9 @@ function Whishlist() {
                 variant="outlined"
                 label="wishlist name"
                 style={{ margin: "15%" }}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
               />
               <div className="btns">
                 {" "}
@@ -74,7 +91,17 @@ function Whishlist() {
                 >
                   Cancel
                 </Button>{" "}
-                <Button variant="contained" color="primary" disableElevation>
+                <Button
+                  type="button"
+                  disabled={name === ""}
+                  onClick={() => {
+                  
+                    CreateOneList();
+                  }}
+                  variant="contained"
+                  color="primary"
+                  disableElevation
+                >
                   Done
                 </Button>
               </div>
@@ -85,14 +112,9 @@ function Whishlist() {
       <div>
         <ul>
           <li>
-            <a href="#home">
-              <Elementwish />
-            </a>
-          </li>
-          <li>
-            <a href="#news">
-              <Elementwish />
-            </a>
+            {Wishlist?.Wishlist?.map((Wishlist) => {
+              return <Elementwish name={Wishlist.name} id={Wishlist._id} />;
+            })}
           </li>
         </ul>
       </div>

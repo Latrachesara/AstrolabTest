@@ -13,7 +13,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../Redux/Actions/AuthActions";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { useHistory } from "react-router-dom";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 function Navb() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const history = useHistory();
   const dispatch = useDispatch();
   const HundleSubmitLogout = () => {
@@ -83,9 +95,20 @@ function Navb() {
               </div>
             )}
           </PopupState>
-          <li><IconButton style={{color:"gold",   marginLeft: "1200%"}}>
+          <li><IconButton onClick={handleClick} style={{color:"gold",   marginLeft: "1250%"}}>
         <KeyboardArrowDownIcon fontSize="large" />
-      </IconButton></li>
+      </IconButton>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>TND</MenuItem>
+        <MenuItem onClick={handleClose}>USD</MenuItem>
+        <MenuItem onClick={handleClose}>EURO</MenuItem>
+      </Menu></li>
         </ul>
       </div>
     </div>

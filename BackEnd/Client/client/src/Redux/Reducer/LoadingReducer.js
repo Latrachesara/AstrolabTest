@@ -1,18 +1,16 @@
-import { GLOBALTYPES } from "./../actions/GlobalType";
+import { GLOBALTYPES } from "./../Actions/GlobalType";
 const inistialState = {
-  Loading: null,
+  Loading: false,
 };
 
 const alertReducer = (state = inistialState, action) => {
   switch (action.type) {
     case GLOBALTYPES.LOADING_ON:
       return {
-        ...state,
         Loading: true,
       };
     case GLOBALTYPES.LOADING_OFF:
       return {
-        ...state,
         Loading: false,
       };
     default:

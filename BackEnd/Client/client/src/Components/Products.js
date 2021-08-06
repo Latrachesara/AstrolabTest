@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./../Style/Products.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
@@ -13,6 +13,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import { useSelector, useDispatch } from "react-redux";
+import { GettAllWishList } from "./../Redux/Actions/WishlistActions";
+import { CreateProduct, GetAllProduct, getAllProduct} from "../Redux/Actions/ProductActions";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -35,31 +38,49 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Products() {
-  const [wishlist, setWishlist] = React.useState("");
-
   const handleChange1 = (event) => {
     setWishlist(event.target.value);
   };
-  const [currency, setCurrency] = React.useState("");
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const Disabled = () => {
+    return (
+      currency === "" ||
+      wishlist === "" ||
+      status === "" ||
+      description === "" ||
+      name === "" ||
+      Price === ""
+    );
   };
-  const [status, setStatus] = React.useState("");
-
-  const handleChange2 = (event) => {
-    setStatus(event.target.value);
-  };
+  const [currency, setCurrency] = useState("");
+  const [wishlist, setWishlist] = useState("");
+  const [status, setStatus] = useState("");
+  const [description, setdescription] = useState("");
+  const [Price, setPrice] = useState(0);
+  const [name, setName] = useState("");
+  const { Product } = useSelector((state) => state);
+  const Wishlist = useSelector((state) => state.Wishlist);
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GettAllWishList());
+  }, [dispatch]);
   const handleOpen = () => {
     setOpen(true);
   };
-
+  useEffect(() => {
+    dispatch(getAllProduct());
+  }, [dispatch]);
   const handleClose = () => {
     setOpen(false);
   };
+  const HandleCreation = () => {
+    dispatch(
+      CreateProduct({ currency, wishlist, status, description, Price, name })
+    );
+  };
+
   return (
     <div className="box">
       <center>
@@ -94,12 +115,18 @@ function Products() {
                     variant="outlined"
                     label="Name"
                     style={{ paddingRight: "1%" }}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
                   />
                   <TextField
                     id="outlined-basic"
                     variant="outlined"
                     label="Price"
                     style={{ paddingRight: "1%" }}
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
                   />
                   <FormControl
                     variant="outlined"
@@ -111,13 +138,14 @@ function Products() {
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
-                      value={currency}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        setCurrency(e.target.value);
+                      }}
                       label="Currency"
                     >
-                      <MenuItem value={10}>TND</MenuItem>
-                      <MenuItem value={20}>USD</MenuItem>
-                      <MenuItem value={30}>EURO</MenuItem>
+                      <MenuItem value="TND">TND</MenuItem>
+                      <MenuItem value="USD">USD</MenuItem>
+                      <MenuItem value="EURO">EURO</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
@@ -130,6 +158,9 @@ function Products() {
                     placeholder="Description"
                     variant="outlined"
                     style={{ width: "95%", marginTop: "2%" }}
+                    onChange={(e) => {
+                      setdescription(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="selects">
@@ -143,13 +174,14 @@ function Products() {
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
-                      value={status}
-                      onChange={handleChange2}
+                      onChange={(e) => {
+                        setStatus(e.target.value);
+                      }}
                       label="Status"
                       style={{ marginRight: "30%" }}
                     >
-                      <MenuItem value={10}>To Buy</MenuItem>
-                      <MenuItem value={20}>Bought</MenuItem>
+                      <MenuItem value="TO BUY">To Buy</MenuItem>
+                      <MenuItem value="Bought">Bought</MenuItem>
                     </Select>
                   </FormControl>
                   <FormControl
@@ -162,13 +194,18 @@ function Products() {
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined1"
-                      value={wishlist}
-                      onChange={handleChange1}
+                      onChange={(e) => {
+                        setWishlist(e.target.value);
+                      }}
                       label="Wishlist"
                     >
-                      <MenuItem value={10}>wishlist 1</MenuItem>
-                      <MenuItem value={20}>wishlist 2</MenuItem>
-                      <MenuItem value={30}>wishlist 3</MenuItem>
+                      {Wishlist?.Wishlist?.map((Wishlist) => {
+                        return (
+                          <MenuItem value={Wishlist._id}>
+                            {Wishlist.name}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </FormControl>
                 </div>
@@ -183,7 +220,17 @@ function Products() {
                 >
                   Cancel
                 </Button>{" "}
-                <Button variant="contained" color="primary" disableElevation>
+                <Button
+                  type="button"
+                  
+                  onClick={() => {
+                    HandleCreation();
+                  }}
+                  variant="contained"
+                  color="primary"
+                  disableElevation
+                  disabled={Disabled()}
+                >
                   Done
                 </Button>
               </div>
@@ -193,16 +240,19 @@ function Products() {
       </center>
       <div>
         <ul>
-          <li>
-            <a href="#home">
-              <Elementwish />
-            </a>
-          </li>
-          <li>
-            <a href="#news">
-              <Elementwish />
-            </a>
-          </li>
+          {Product.Products.map((Product) => {
+            return (
+              <li>
+                <div
+                  onClick={() => {
+                    dispatch(GetAllProduct(Product._id));
+                  }}
+                >
+                  <Elementwish name={Product.name} id={Product._id} />
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

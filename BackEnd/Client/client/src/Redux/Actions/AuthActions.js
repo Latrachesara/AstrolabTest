@@ -3,13 +3,15 @@ import { GLOBALTYPES } from "./GlobalType";
 import { AUTHTYPES } from "./../Reducer/AuthReducer";
 
 export const register = (UserData) => async (dispatch) => {
-  console.log("this is the data in the actions :", UserData);
+  dispatch({ type: GLOBALTYPES.LOADING_ON });
   await PostData("register", UserData)
     .then((res) => {
       dispatch({
         type: GLOBALTYPES.ALERT,
         payload: { error: false, msg: res.data.message },
       });
+      dispatch({ type: GLOBALTYPES.LOADING_OFF });
+
     })
     .catch((err) => {
       console.log(err.message);
@@ -21,17 +23,19 @@ export const register = (UserData) => async (dispatch) => {
           type: "REGISTER",
         },
       });
+      dispatch({ type: GLOBALTYPES.LOADING_OFF });
+
     });
 };
 
 export const Login = (data, history) => async (dispatch) => {
-  console.log(data);
+  dispatch({ type: GLOBALTYPES.LOADING_ON });
   await PostData("login", data)
     .then((res) => {
       console.log(res);
       history.push("/");
       dispatch({ type: AUTHTYPES.LOGIN_SUCCED, payload: res.data });
-      dispatch({ type: GLOBALTYPES.LOADING_ON });
+      dispatch({ type: GLOBALTYPES.LOADING_OFF });
     })
     .catch((err) => {
       dispatch({
@@ -49,16 +53,17 @@ export const Login = (data, history) => async (dispatch) => {
 export const VerifIsLoggedIn = () => async (dispatch) => {
   await GetData("VerifiLoggedIn")
     .then((res) => {
-      console.log(res);
+      dispatch({ type: GLOBALTYPES.LOADING_OFF });
       dispatch({ type: AUTHTYPES.LOGGEDIN, payload: res.data });
-      dispatch({ type: GLOBALTYPES.LOADING_ON });
+     
     })
     .catch((err) => {
+      dispatch({ type: GLOBALTYPES.LOADING_OFF });
       dispatch({
         type: AUTHTYPES.NOTLOGGED,
         payload: { msg: err.response?.data?.message },
       });
-      dispatch({ type: GLOBALTYPES.LOADING_OFF });
+     
     });
 };
 export const Logout = () => async (dispatch) => {

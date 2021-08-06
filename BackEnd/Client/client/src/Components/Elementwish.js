@@ -1,10 +1,10 @@
 import React from "react";
 import "./../Style/Elementwish.css";
 
-function Elementwish() {
+function Elementwish({ name, id }) {
   return (
     <div className="element">
-      <h4>element one</h4>
+      <a href="#">{name}</a>
     </div>
   );
 }
