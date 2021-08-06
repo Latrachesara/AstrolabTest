@@ -95,7 +95,6 @@ function Whishlist() {
                   type="button"
                   disabled={name === ""}
                   onClick={() => {
-                  
                     CreateOneList();
                   }}
                   variant="contained"

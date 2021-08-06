@@ -12,10 +12,15 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import IconButton from "@material-ui/core/IconButton";
 import { useSelector, useDispatch } from "react-redux";
 import { GettAllWishList } from "./../Redux/Actions/WishlistActions";
-import { CreateProduct, GetAllProduct, getAllProduct} from "../Redux/Actions/ProductActions";
+import {
+  CreateProduct,
+  GetAllProduct,
+  getAllProduct,
+} from "../Redux/Actions/ProductActions";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -108,7 +113,21 @@ function Products() {
               <form>
                 <div>
                   <div className="foto">
-                    <AddAPhotoIcon fontSize="large" />
+                    <input
+                      accept="image/*"
+                      className={classes.input}
+                      id="icon-button-file"
+                      type="file"
+                    />
+                    <label htmlFor="icon-button-file">
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <PhotoCamera />
+                      </IconButton>
+                    </label>
                   </div>
                   <TextField
                     id="outlined-basic"
@@ -222,7 +241,6 @@ function Products() {
                 </Button>{" "}
                 <Button
                   type="button"
-                  
                   onClick={() => {
                     HandleCreation();
                   }}
