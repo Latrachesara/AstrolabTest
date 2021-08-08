@@ -30,6 +30,11 @@ router.get(
 router.get("/get/AllProduct", Auth, ProductControllers.getAllProduct);
 router.get("/get/product/:id", Auth, ProductControllers.getProductById);
 router.delete("/delete/product/:id", Auth, ProductControllers.deleteProduct);
-router.patch("/update/product/:id", Auth, ProductControllers.updateProduct);
+router.patch(
+  "/update/product/:id",
+  upload.single("image"),
+  Auth,
+  ProductControllers.updateProduct
+);
 
 module.exports = router;

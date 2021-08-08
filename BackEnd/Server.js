@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const cookieParser = require("cookie-parser");
 require("./Config/DataBase");
 const cors = require("cors");
@@ -16,6 +17,7 @@ app.use(AuthRoute);
 app.use(UserRoute);
 app.use(WishlistRoute);
 app.use(ProductRoute);
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static("./client/client/build"));
 app.listen(port, () => {
   console.log(`server running on port : ${port}`);

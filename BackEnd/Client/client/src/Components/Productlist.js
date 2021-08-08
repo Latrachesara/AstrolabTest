@@ -11,10 +11,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { ChangeCost } from "./../Tools/CurrencyAPI";
+import Alert from "@material-ui/lab/Alert";
 const useStyles = makeStyles({
   table: {
-    minWidth: 450
-  }
+    width: 800,
+    marginLeft: "5%",
+  },
 });
 
 function createData(name, calories, fat, carbs, protein) {
@@ -26,12 +28,12 @@ const rows = [
   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
   createData("Eclair", 262, 16.0, 24, 6.0),
   createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-function Productlist() {
+function Productlist({ filterStatus }) {
   const classes = useStyles();
-
+  const PATH = process.env.REACT_APP_IMAGES_PATH;
   const dispatch = useDispatch();
   const { Wishlist, Product, Currency } = useSelector((state) => state);
   useEffect(() => {
@@ -52,21 +54,37 @@ function Productlist() {
   }, [Currency.Currency]);
   return (
     <div>
-      <TableContainer component={Paper}>
+      <TableContainer style={{width:"80%", marginLeft:"5%"}}component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">name</TableCell>
+              <TableCell align="left">Image</TableCell>
+              <TableCell align="left">Title</TableCell>
+              <TableCell align="left">Description</TableCell>
               <TableCell align="left">Price</TableCell>
-              <TableCell align="left">currency</TableCell>
-              <TableCell align="left">wish list</TableCell>
               <TableCell align="left">status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {Product.Selected.map((Product) => (
+            {Product.Selected.filter((product) => {
+              if (filterStatus === "") {
+                return product;
+              } else {
+                if (filterStatus === product.status) {
+                  return product;
+                }
+              }
+            }).map((Product) => (
               <TableRow key={Product.name}>
+                <TableCell align="left" style={{ width: "15%" }}>
+                  <img
+                    src={
+                      Product.image ? `${PATH}${Product.image}` : "/product.png"
+                    }
+                  />
+                </TableCell>
                 <TableCell align="left">{Product.name}</TableCell>
+                <TableCell align="left">{Product.description}</TableCell>
                 <TableCell align="left">
                   {ChangeCost(
                     Product.Price,
@@ -74,17 +92,17 @@ function Productlist() {
                     Currency.currency
                   )}
                 </TableCell>
-                <TableCell align="left">
-                  {FilerCurrency(Product.currency)}
-                </TableCell>
-                <TableCell align="left">{Product.wishlist}</TableCell>
-
                 <TableCell align="left">{Product.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      {Product.Selected.length === 0 && (
+        <div style={{ marginLeft: "5%", width: "80%" }}>
+          <Alert severity="warning">Your wishlist is empty</Alert>
+        </div>
+      )}
     </div>
   );
 }

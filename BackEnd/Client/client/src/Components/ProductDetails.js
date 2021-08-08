@@ -17,6 +17,7 @@ import { FilledInput, TextField, Typography } from "@material-ui/core";
 import ProductUpdate from "./ProductUpdate";
 import { useDispatch } from "react-redux";
 import { DeleteProduct } from "../Redux/Actions/ProductActions";
+import Alert from '@material-ui/lab/Alert';
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -30,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     width: "50%"
   },
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+   } },
   formControl: {
     minWidth: 120
   },
@@ -39,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ProductDetails() {
-  const PATH = process.env.IMAGES_PATH;
+  const PATH = process.env.REACT_APP_IMAGES_PATH;
   const Product = useSelector((state) => state.Product);
   const Wishlist = useSelector((state) => state.Wishlist);
   const classes = useStyles();
@@ -74,7 +80,7 @@ function ProductDetails() {
             <img
               src={
                 Product.SelectedOne.image
-                  ? `${PATH}Product.SelectedOne.image`
+                  ? `${PATH}${Product.SelectedOne.image}`
                   : "/product.png"
               }
             />
@@ -88,7 +94,7 @@ function ProductDetails() {
 
               <TextField
                 id="filled-disabled"
-                variant="filled"
+                variant="outlined"
                 disabled
                 value={GetWishListName(Product.SelectedOne.wishlist)}
               ></TextField>
@@ -156,7 +162,7 @@ function ProductDetails() {
           </div>
         </div>
       )}
-      {!Product.SelectedOne && <div>Your Product List is empty</div>}
+      {!Product.SelectedOne && <div style={{margin:"10%"}}><Alert severity="warning">Your Product List is empty</Alert></div>}
     </div>
   );
 }

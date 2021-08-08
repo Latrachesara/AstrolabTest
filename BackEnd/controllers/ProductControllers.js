@@ -69,20 +69,44 @@ const ProductControllers = {
       });
   },
   updateProduct: async (req, res) => {
-    console.log(req.body);
     if (!req.body) {
       return res.status(400).json({ mesage: "data is empty" });
     }
-
-    await Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
-    })
-      .then((data) => {
-        return res.json(data);
+    if (req.file) {
+      const { name, Price, currency, description, status, wishlist } = req.body;
+      await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+          name,
+          Price,
+          currency,
+          description,
+          status,
+          wishlist,
+          createdBy: req.user,
+          image: req.file.path
+        },
+        {
+          new: true
+        }
+      )
+        .then((data) => {
+          return res.json(data);
+        })
+        .catch((err) => {
+          return res.status(400).json({ mesage: err.message });
+        });
+    } else {
+      await Product.findByIdAndUpdate(req.params.id, req.body, {
+        new: true
       })
-      .catch((err) => {
-        return res.status(400).json({ mesage: err.message });
-      });
+        .then((data) => {
+          return res.json(data);
+        })
+        .catch((err) => {
+          return res.status(400).json({ mesage: err.message });
+        });
+    }
   }
 };
 

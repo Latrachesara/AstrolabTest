@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./../../Style/Home.css";
 import Wishlist from "../../Components/Wishlist";
 import Productlist from "./../../Components/Productlist";
@@ -22,6 +22,10 @@ import {
 import SnackBar from "../../Components/SnackBar/SnackBar";
 import SnackBarError from "../../Components/SnackBar/SnackBarError";
 import UpdateWishList from "../../Components/UpdateWishList";
+import AppsIcon from "@material-ui/icons/Apps";
+import ReorderIcon from "@material-ui/icons/Reorder";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -51,6 +55,7 @@ function Home() {
   }, [dispatch]);
   const wishList = useSelector((state) => state.Wishlist);
   const alert = useSelector((state) => state.alert);
+  const [statusFilter, setStatusFilter] = useState("");
   useEffect(() => {
     console.log(wishList);
   }, [wishList]);
@@ -141,8 +146,33 @@ function Home() {
               </center>
             </div>
           </div>
-          <NavWishlist />
-          <Productlist />
+          <div className="navWishlist">
+            <ul>
+              <li
+                onClick={() => {
+                  setStatusFilter("TO BUY");
+                }}
+              >
+                <a>
+                  <PlaylistAddIcon /> To Buy
+                </a>
+              </li>
+              <li
+                onClick={() => {
+                  setStatusFilter("Bought");
+                }}
+              >
+                <a>
+                  <PlaylistAddCheckIcon /> Bought
+                </a>
+              </li>
+              <div className="icons">
+                <AppsIcon />
+                <ReorderIcon />
+              </div>
+            </ul>
+          </div>
+          <Productlist filterStatus={statusFilter} />
         </div>
       </div>
       {alert.type === "DELETED_WISHLIST" && !alert.error ? (
