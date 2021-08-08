@@ -1,18 +1,16 @@
 import { PostData, GetData } from "./../../Tools/APICalls";
 import { GLOBALTYPES } from "./GlobalType";
 import { AUTHTYPES } from "./../Reducer/AuthReducer";
-import { json } from "express";
-
+import { useHistory } from "react-router";
 export const register = (UserData) => async (dispatch) => {
   dispatch({ type: GLOBALTYPES.LOADING_ON });
   await PostData("register", UserData)
     .then((res) => {
       dispatch({
         type: GLOBALTYPES.ALERT,
-        payload: { error: false, msg: res.data.message },
+        payload: { error: false, msg: res.data.message }
       });
       dispatch({ type: GLOBALTYPES.LOADING_OFF });
-
     })
     .catch((err) => {
       console.log(err.message);
@@ -21,11 +19,10 @@ export const register = (UserData) => async (dispatch) => {
         payload: {
           error: true,
           msg: err.response?.data?.message,
-          type: "REGISTER",
-        },
+          type: "REGISTER"
+        }
       });
       dispatch({ type: GLOBALTYPES.LOADING_OFF });
-
     });
 };
 
@@ -44,8 +41,8 @@ export const Login = (data, history) => async (dispatch) => {
         payload: {
           error: true,
           msg: err.response?.data?.message,
-          type: "LOGIN",
-        },
+          type: "LOGIN"
+        }
       });
       dispatch({ type: GLOBALTYPES.LOADING_OFF });
     });
@@ -56,24 +53,21 @@ export const VerifIsLoggedIn = () => async (dispatch) => {
     .then((res) => {
       dispatch({ type: GLOBALTYPES.LOADING_OFF });
       dispatch({ type: AUTHTYPES.LOGGEDIN, payload: res.data });
-     
     })
     .catch((err) => {
       dispatch({ type: GLOBALTYPES.LOADING_OFF });
       dispatch({
         type: AUTHTYPES.NOTLOGGED,
-        payload: { msg: err.response?.data?.message },
+        payload: { msg: err.response?.data?.message }
       });
-     
     });
-  };
-  export const Logout = () => async (dispatch) => {
-  console.log("logout action");
+};
+export const Logout = (history) => async (dispatch) => {
   await PostData("logout").then((res) => {
     console.log(res);
 
     dispatch({
-      type: GLOBALTYPES.LOGOUT,
+      type: GLOBALTYPES.LOGOUT
     });
   });
 };

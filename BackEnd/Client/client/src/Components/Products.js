@@ -18,28 +18,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { GettAllWishList } from "./../Redux/Actions/WishlistActions";
 import {
   CreateProduct,
-  GetAllProduct,
+  GetProductById,
   getAllProduct,
+  DeleteProduct
 } from "../Redux/Actions/ProductActions";
+import SnackBar from "./SnackBar/SnackBar";
+import SnackBarError from "./SnackBar/SnackBarError";
+import ProductUpdate from "./ProductUpdate";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: "2px solid blue",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2),
-    width: "50%",
+    width: "50%"
   },
   formControl: {
-    minWidth: 120,
+    minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
+    marginTop: theme.spacing(2)
+  }
 }));
 
 function Products() {
@@ -65,6 +69,7 @@ function Products() {
   const [name, setName] = useState("");
   const { Product } = useSelector((state) => state);
   const Wishlist = useSelector((state) => state.Wishlist);
+  const alert = useSelector((state) => state.alert);
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -80,10 +85,23 @@ function Products() {
   const handleClose = () => {
     setOpen(false);
   };
+  const [image, setImage] = useState(null);
   const HandleCreation = () => {
-    dispatch(
-      CreateProduct({ currency, wishlist, status, description, Price, name })
-    );
+    var formData = new FormData();
+    formData.append("image", image);
+    formData.append("name", name);
+    formData.append("currency", currency);
+    formData.append("wishlist", wishlist);
+    formData.append("status", status);
+    formData.append("description", description);
+    formData.append("Price", Price);
+    dispatch(CreateProduct(formData));
+    setWishlist("");
+    setStatus("");
+    setCurrency("");
+    setPrice();
+    setdescription("");
+    setName("");
   };
 
   return (
@@ -102,7 +120,7 @@ function Products() {
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
-            timeout: 500,
+            timeout: 500
           }}
         >
           <Fade in={open}>
@@ -118,6 +136,9 @@ function Products() {
                       className={classes.input}
                       id="icon-button-file"
                       type="file"
+                      onChange={(e) => {
+                        setImage(e.target.files[0]);
+                      }}
                     />
                     <label htmlFor="icon-button-file">
                       <IconButton
@@ -137,6 +158,7 @@ function Products() {
                     onChange={(e) => {
                       setName(e.target.value);
                     }}
+                    value={name}
                   />
                   <TextField
                     id="outlined-basic"
@@ -146,6 +168,7 @@ function Products() {
                     onChange={(e) => {
                       setPrice(e.target.value);
                     }}
+                    value={Price}
                   />
                   <FormControl
                     variant="outlined"
@@ -160,6 +183,7 @@ function Products() {
                       onChange={(e) => {
                         setCurrency(e.target.value);
                       }}
+                      value={currency}
                       label="Currency"
                     >
                       <MenuItem value="TND">TND</MenuItem>
@@ -180,6 +204,7 @@ function Products() {
                     onChange={(e) => {
                       setdescription(e.target.value);
                     }}
+                    value={description}
                   />
                 </div>
                 <div className="selects">
@@ -263,7 +288,7 @@ function Products() {
               <li>
                 <div
                   onClick={() => {
-                    dispatch(GetAllProduct(Product._id));
+                    dispatch(GetProductById(Product._id));
                   }}
                 >
                   <Elementwish name={Product.name} id={Product._id} />
@@ -273,6 +298,16 @@ function Products() {
           })}
         </ul>
       </div>
+      {alert.type === "CREATE_PRODUCT" && !alert.error ? (
+        <SnackBar open={true} message={alert.msg} />
+      ) : (
+        <div />
+      )}
+      {alert.type === "CREATE_PRODUCT" && alert.error === true ? (
+        <SnackBarError open={true} message={alert.msg} />
+      ) : (
+        <div />
+      )}
     </div>
   );
 }

@@ -7,6 +7,8 @@ const Product = mongoose.Schema(
     description: { type: String, required: true },
     status: { type: String, required: true },
     wishlist: { type: mongoose.Types.ObjectId, ref: "user" },
+    createdBy: { type: mongoose.Types.ObjectId, ref: "user" },
+    image: { type: String }
   },
   { timestamps: true }
 );

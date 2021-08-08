@@ -16,6 +16,7 @@ app.use(AuthRoute);
 app.use(UserRoute);
 app.use(WishlistRoute);
 app.use(ProductRoute);
+app.use(express.static("./client/client/build"));
 app.listen(port, () => {
   console.log(`server running on port : ${port}`);
 });

@@ -6,16 +6,18 @@ import DescriptionRoundedIcon from "@material-ui/icons/DescriptionRounded";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Popover from "@material-ui/core/Popover";
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from "@material-ui/core/IconButton";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../Redux/Actions/AuthActions";
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { useHistory } from "react-router-dom";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { ChangeCurrency } from "./../Redux/Actions/CurrencyActions";
 function Navb() {
+  const Auth = useSelector((state) => state.Auth);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -30,6 +32,9 @@ function Navb() {
   const dispatch = useDispatch();
   const HundleSubmitLogout = () => {
     dispatch(Logout());
+  };
+  const CurrencySubmit = (data) => {
+    dispatch(ChangeCurrency(data));
   };
   return (
     <div>
@@ -50,7 +55,6 @@ function Navb() {
           <PopupState variant="popover" popupId="demo-popup-popover">
             {(popupState) => (
               <div>
-              
                 <li>
                   <AccountCircleIcon
                     variant="contained"
@@ -59,7 +63,7 @@ function Navb() {
                       fontSize: "30px",
                       marginLeft: "2800%",
                       marginTop: "37%",
-                      color: "gold",
+                      color: "gold"
                     }}
                   />
                 </li>
@@ -67,11 +71,11 @@ function Navb() {
                   {...bindPopover(popupState)}
                   anchorOrigin={{
                     vertical: "bottom",
-                    horizontal: "center",
+                    horizontal: "center"
                   }}
                   transformOrigin={{
                     vertical: "top",
-                    horizontal: "center",
+                    horizontal: "center"
                   }}
                   style={{ width: "275%" }}
                 >
@@ -79,12 +83,15 @@ function Navb() {
                     <div>
                       {" "}
                       <Typography>
-                        <h3>full name</h3>
+                        <h3>
+                          {Auth.user.firstName} {Auth.user.lastName}
+                        </h3>
                       </Typography>
                       <button
                         onClick={() => {
                           console.log("click");
-                          HundleSubmitLogout();
+                          HundleSubmitLogout(history);
+                          history.push("/");
                         }}
                       >
                         <ExitToAppIcon /> LOGOUT
@@ -95,20 +102,46 @@ function Navb() {
               </div>
             )}
           </PopupState>
-          <li><IconButton onClick={handleClick} style={{color:"gold",   marginLeft: "1250%"}}>
-        <KeyboardArrowDownIcon fontSize="large" />
-      </IconButton>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>TND</MenuItem>
-        <MenuItem onClick={handleClose}>USD</MenuItem>
-        <MenuItem onClick={handleClose}>EURO</MenuItem>
-      </Menu></li>
+          <li>
+            <IconButton
+              onClick={handleClick}
+              style={{ color: "gold", marginLeft: "1250%" }}
+            >
+              <KeyboardArrowDownIcon fontSize="large" />
+            </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => {
+                  CurrencySubmit("TND");
+                  handleClose();
+                }}
+              >
+                TND
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  CurrencySubmit("USD");
+                  handleClose();
+                }}
+              >
+                USD
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  CurrencySubmit("EUR");
+                  handleClose();
+                }}
+              >
+                EURO
+              </MenuItem>
+            </Menu>
+          </li>
         </ul>
       </div>
     </div>

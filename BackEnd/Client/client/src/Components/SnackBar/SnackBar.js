@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,17 +14,17 @@ const useStyles = makeStyles((theme) => ({
 
 function SnackBar({ open, message }) {
   const classes = useStyles();
-
+  const [Open, setOpen] = useState(open);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
 
-    open = false;
+    setOpen(false);
   };
   return (
     <div>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={Open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           {message}
         </Alert>

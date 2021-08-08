@@ -11,27 +11,31 @@ import Button from "@material-ui/core/Button";
 import {
   GettAllWishList,
   CreateWishlist,
+  SelectWishList
 } from "./../Redux/Actions/WishlistActions";
 import { useDispatch, useSelector } from "react-redux";
+import SnackBar from "./SnackBar/SnackBar";
+import SnackBarError from "./SnackBar/SnackBarError";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: "2px solid gray",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2),
-    width: "30%",
-  },
+    width: "30%"
+  }
 }));
 
 function Whishlist() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const Wishlist = useSelector((state) => state.Wishlist);
+  const alert = useSelector((state) => state.alert);
   useEffect(() => {
     dispatch(GettAllWishList());
   }, [dispatch]);
@@ -64,7 +68,7 @@ function Whishlist() {
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
-            timeout: 500,
+            timeout: 500
           }}
         >
           <Fade in={open}>
@@ -112,11 +116,29 @@ function Whishlist() {
         <ul>
           <li>
             {Wishlist?.Wishlist?.map((Wishlist) => {
-              return <Elementwish name={Wishlist.name} id={Wishlist._id} />;
+              return (
+                <div
+                  onClick={() => {
+                    dispatch(SelectWishList(Wishlist._id));
+                  }}
+                >
+                  <Elementwish name={Wishlist.name} id={Wishlist._id} />
+                </div>
+              );
             })}
           </li>
         </ul>
       </div>
+      {alert.type === "CREAT_WISHLIST" && !alert.error ? (
+        <SnackBar open={true} message={alert.msg} />
+      ) : (
+        <div />
+      )}
+      {alert.type === "CREAT_WISHLIST" && alert.error === true ? (
+        <SnackBarError open={true} message={alert.msg} />
+      ) : (
+        <div />
+      )}
     </div>
   );
 }

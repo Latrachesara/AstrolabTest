@@ -1,41 +1,39 @@
+.navWishlist  ul {
+  list-style-type: none;
+  margin-left: 5%;
+  
+  padding: 0;
+  width: 80%;
+  overflow: hidden;
+  background-color:white;
+  border : 1px solid lightgray;
+}
 
- .navWishlist  ul {
-        list-style-type: none;
-        margin-left: 5%;
-        
-        padding: 0;
-        width: 80%;
-        overflow: hidden;
-        background-color:white;
-        border : 1px solid lightgray;
-      }
-      
-      .navWishlist li {
-        float: left;
-      }
-      
-      .navWishlist li a {
-        display: block;
-        color: teal;;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        width: "20%";
-      }
-      
-      .navWishlist li a:hover:not(.active) {
-        background-color: teal;
-        color:white;
-      }
-      
-      .active {
-        background-color: teal;
-      }
-      .icons {
-          float: right;
-          padding-right: 4%;
-          padding-top: 2%;
-          color :teal;
-        
-      }
-     
+.navWishlist li {
+  float: left;
+}
+
+.navWishlist li a {
+  display: block;
+  color: teal;;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  width: "20%";
+}
+
+.navWishlist li a:hover:not(.active) {
+  background-color: teal;
+  color:white;
+}
+
+.active {
+  background-color: teal;
+}
+.icons {
+    float: right;
+    padding-right: 4%;
+    padding-top: 2%;
+    color :teal;
+  
+}

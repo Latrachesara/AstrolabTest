@@ -2,14 +2,17 @@ const Product = require("./../models/Product");
 
 const ProductControllers = {
   createProduct: async (req, res) => {
+    console.log(req.file);
     const { name, Price, currency, description, status, wishlist } = req.body;
     const product = new Product({
       name,
-      Price,  
+      Price,
       currency,
       description,
       status,
       wishlist,
+      createdBy: req.user,
+      image: req.file.path
     });
     await product
       .save()
@@ -21,19 +24,22 @@ const ProductControllers = {
         console.log(err);
         return res.status(400).json({ message: err.message });
       });
-    },
-    getProductByWishListId: async (req, res) => {
-      const id = req.params.id;
-      Product.find({ wishlist: id })
-        .then((products) => {
-          return res.status(200).json(products);
-        })
-        .catch((err) => {
-          return res.status(400).json({ message: err.message });
-        });
-    },
-    getAllProduct: async (req, res) => {
-      await Product.find()
+  },
+  getProductByWishListId: async (req, res) => {
+    const id = req.params.id;
+    Product.find({ wishlist: id })
+      .then((products) => {
+        return res.status(200).json(products);
+      })
+      .catch((err) => {
+        return res.status(400).json({ message: err.message });
+      });
+  },
+  getAllProduct: async (req, res) => {
+    await Product.find({ createdBy: req.user })
+      .then((products) => {
+        return res.status(200).json(products);
+      })
       .catch((err) => {
         return res.status(404).json({ mesage: err.message });
       });
@@ -48,37 +54,36 @@ const ProductControllers = {
       });
   },
   deleteProduct: async (req, res) => {
-    await Product.findByIdAndRemove(req.params.id)
+    await Product.findByIdAndDelete(req.params.id)
       .then((data) => {
         if (!data) {
           return res.status(404).json({ mesage: err.message });
         } else {
           return res
-            .status(200)
+            .status(204)
             .json({ message: " product deleted successfully" });
         }
       })
       .catch((err) => {
-        return res.status(404).json({ mesage: err.message });
+        return res.status(400).json({ mesage: err.message });
       });
   },
   updateProduct: async (req, res) => {
+    console.log(req.body);
     if (!req.body) {
-      return res.status(40).json({ mesage: "data is empty" });
+      return res.status(400).json({ mesage: "data is empty" });
     }
-  
-    await Product.findByIdAndUpdate(req.params.id, req.body, { useFindAndModify: false })
-    .then(data => {
-      if (!data) {
-        return res.status(404).json({ mesage: err.message });
-      } else  return res
-      .status(200)
-      .json({ message: "product updated successfully" });
+
+    await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
     })
-    .catch(err => {
-      return res.status(500).json({ mesage: err.message });
-    });
-  },
+      .then((data) => {
+        return res.json(data);
+      })
+      .catch((err) => {
+        return res.status(400).json({ mesage: err.message });
+      });
+  }
 };
 
 module.exports = ProductControllers;

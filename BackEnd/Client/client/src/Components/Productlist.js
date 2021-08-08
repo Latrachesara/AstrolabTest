@@ -1,209 +1,91 @@
 import "./../Style/Productlist.css";
-import React from "react";
-import PropTypes from "prop-types";
-import clsx from "clsx";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { GetProdcutByWishList } from "./../Redux/Actions/ProductActions";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { AutoSizer, Column, Table } from "react-virtualized";
-
-const styles = (theme) => ({
-  flexContainer: {
-    display: "flex",
-    alignItems: "center",
-    boxSizing: "border-box",
-  },
+import { ChangeCost } from "./../Tools/CurrencyAPI";
+const useStyles = makeStyles({
   table: {
-    "& .ReactVirtualized__Table__headerRow": {
-      flip: false,
-      paddingRight: theme.direction === "rtl" ? "0 !important" : undefined,
-    },
-  },
-  tableRow: {
-    cursor: "pointer",
-  },
-  tableRowHover: {
-    "&:hover": {
-      backgroundColor: theme.palette.grey[200],
-    },
-  },
-  tableCell: {
-    flex: 1,
-  },
-  noClick: {
-    cursor: "initial",
-  },
+    minWidth: 450
+  }
 });
 
-class MuiVirtualizedTable extends React.PureComponent {
-  static defaultProps = {
-    headerHeight: 40,
-    rowHeight: 5,
-  };
-
-  getRowClassName = ({ index }) => {
-    const { classes, onRowClick } = this.props;
-
-    return clsx(classes.tableRow, classes.flexContainer, {
-      [classes.tableRowHover]: index !== -1 && onRowClick != null,
-    });
-  };
-
-  cellRenderer = ({ cellData, columnIndex }) => {
-    const { columns, classes, rowHeight, onRowClick } = this.props;
-    return (
-      <TableCell
-        component="div"
-        className={clsx(classes.tableCell, classes.flexContainer, {
-          [classes.noClick]: onRowClick == null,
-        })}
-        variant="body"
-        style={{ height: rowHeight }}
-        align={
-          (columnIndex != null && columns[columnIndex].numeric) || false
-            ? "right"
-            : "left"
-        }
-      >
-        {cellData}
-      </TableCell>
-    );
-  };
-
-  headerRenderer = ({ label, columnIndex }) => {
-    const { headerHeight, columns, classes } = this.props;
-
-    return (
-      <TableCell
-        component="div"
-        className={clsx(
-          classes.tableCell,
-          classes.flexContainer,
-          classes.noClick
-        )}
-        variant="head"
-        style={{ height: headerHeight }}
-        align={columns[columnIndex].numeric || false ? "right" : "left"}
-      >
-        <span>{label}</span>
-      </TableCell>
-    );
-  };
-
-  render() {
-    const { classes, columns, rowHeight, headerHeight, ...tableProps } =
-      this.props;
-    return (
-      <AutoSizer>
-        {({ height, width }) => (
-          <Table
-            height={height}
-            width={width}
-            rowHeight={rowHeight}
-            gridStyle={{
-              direction: "inherit",
-            }}
-            headerHeight={headerHeight}
-            className={classes.table}
-            {...tableProps}
-            rowClassName={this.getRowClassName}
-          >
-            {columns.map(({ dataKey, ...other }, index) => {
-              return (
-                <Column
-                  key={dataKey}
-                  headerRenderer={(headerProps) =>
-                    this.headerRenderer({
-                      ...headerProps,
-                      columnIndex: index,
-                    })
-                  }
-                  className={classes.flexContainer}
-                  cellRenderer={this.cellRenderer}
-                  dataKey={dataKey}
-                  {...other}
-                />
-              );
-            })}
-          </Table>
-        )}
-      </AutoSizer>
-    );
-  }
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
 }
 
-MuiVirtualizedTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      dataKey: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      numeric: PropTypes.bool,
-      width: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  headerHeight: PropTypes.number,
-  onRowClick: PropTypes.func,
-  rowHeight: PropTypes.number,
-};
-
-const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
-
-const sample = [
-  ["Frozen yoghurt", 159, 6.0, 24, 4.0],
-  ["Ice cream sandwich", 237, 9.0, 37, 4.3],
-  ["Eclair", 262, 16.0, 24, 6.0],
-  ["Cupcake", 305, 3.7, 67, 4.3],
-  ["Gingerbread", 356, 16.0, 49, 3.9],
+const rows = [
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+  createData("Cupcake", 305, 3.7, 67, 4.3),
+  createData("Gingerbread", 356, 16.0, 49, 3.9)
 ];
 
-function createData(id, dessert, calories, fat, carbs, protein) {
-  return { id, dessert, calories, fat, carbs, protein };
-}
-
-const rows = [];
-
-for (let i = 0; i < 200; i += 1) {
-  const randomSelection = sample[Math.floor(Math.random() * sample.length)];
-  rows.push(createData(i, ...randomSelection));
-}
-
 function Productlist() {
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+  const { Wishlist, Product, Currency } = useSelector((state) => state);
+  useEffect(() => {
+    dispatch(GetProdcutByWishList(Wishlist.SelectedWishList));
+  }, [dispatch, Wishlist.SelectedWishList]);
+  const FilerCurrency = (data) => {
+    let Curr = "";
+    if (Currency.currency === null) {
+      return (Curr = data);
+    } else {
+      return (Curr = Currency.currency);
+    }
+    return Curr;
+  };
+  const NewCost = () => {};
+  useEffect(() => {
+    ChangeCost("TND", Currency.currency, 100);
+  }, [Currency.Currency]);
   return (
-    <Paper style={{ height: 250, width: "80%", marginLeft: "5%" }}>
-      <VirtualizedTable
-        rowCount={rows.length}
-        rowGetter={({ index }) => rows[index]}
-        columns={[
-          {
-            width: 160,
-            label: "Foto",
-            dataKey: "foto",
-          },
-          {
-            width: 150,
-            label: "Title",
-            dataKey: "title",
-          },
-          {
-            width: 220,
-            label: "Description",
-            dataKey: "description",
-          },
-          {
-            width: 120,
-            label: "Status",
-            dataKey: "status",
-          },
-          {
-            width: 120,
-            label: "Price",
-            dataKey: "price",
-            numeric: true,
-          },
-        ]}
-      />
-    </Paper>
+    <div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">name</TableCell>
+              <TableCell align="left">Price</TableCell>
+              <TableCell align="left">currency</TableCell>
+              <TableCell align="left">wish list</TableCell>
+              <TableCell align="left">status</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Product.Selected.map((Product) => (
+              <TableRow key={Product.name}>
+                <TableCell align="left">{Product.name}</TableCell>
+                <TableCell align="left">
+                  {ChangeCost(
+                    Product.Price,
+                    Product.currency,
+                    Currency.currency
+                  )}
+                </TableCell>
+                <TableCell align="left">
+                  {FilerCurrency(Product.currency)}
+                </TableCell>
+                <TableCell align="left">{Product.wishlist}</TableCell>
+
+                <TableCell align="left">{Product.status}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
 

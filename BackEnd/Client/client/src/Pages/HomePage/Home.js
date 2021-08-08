@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./../../Style/Home.css";
 import Wishlist from "../../Components/Wishlist";
 import Productlist from "./../../Components/Productlist";
@@ -14,36 +14,59 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Button from "@material-ui/core/Button";
 import Fade from "@material-ui/core/Fade";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  DeleteWishList,
+  GettAllWishList
+} from "./../../Redux/Actions/WishlistActions";
+import SnackBar from "../../Components/SnackBar/SnackBar";
+import SnackBarError from "../../Components/SnackBar/SnackBarError";
+import UpdateWishList from "../../Components/UpdateWishList";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: "2px solid blue",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2),
-    width: "50%",
+    width: "50%"
   },
   formControl: {
-    minWidth: 120,
+    minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
+    marginTop: theme.spacing(2)
+  }
 }));
 function Home() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GettAllWishList());
+  }, [dispatch]);
+  const wishList = useSelector((state) => state.Wishlist);
+  const alert = useSelector((state) => state.alert);
+  useEffect(() => {
+    console.log(wishList);
+  }, [wishList]);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-
+  const ReturnWishListName = (id) => {
+    let Name = "";
+    wishList.Wishlist.filter((wishlist) => {
+      return wishlist._id === id ? (Name = wishlist.name) : "";
+    });
+    return Name;
+  };
   return (
     <div>
       <Navb />
@@ -54,14 +77,12 @@ function Home() {
         <div>
           <div class="wrapper1">
             <div>
-              <h2>Wishlist 1</h2>
+              <h2>{ReturnWishListName(wishList.SelectedWishList)}</h2>
             </div>
             <div className="buttons">
               <center>
                 <div className="iconBtn">
-                  <IconButton>
-                    <EditIcon fontSize="large" style={{ color: "green" }} />
-                  </IconButton>
+                  <UpdateWishList />
                   <IconButton onClick={handleOpen}>
                     <DeleteIcon fontSize="large" style={{ color: "red" }} />
                   </IconButton>
@@ -74,7 +95,7 @@ function Home() {
                     closeAfterTransition
                     BackdropComponent={Backdrop}
                     BackdropProps={{
-                      timeout: 500,
+                      timeout: 500
                     }}
                   >
                     <Fade in={open}>
@@ -103,6 +124,12 @@ function Home() {
                             variant="contained"
                             color="primary"
                             disableElevation
+                            onClick={() => {
+                              dispatch(
+                                DeleteWishList(wishList.SelectedWishList)
+                              );
+                              handleClose();
+                            }}
                           >
                             Delete
                           </Button>
@@ -118,6 +145,16 @@ function Home() {
           <Productlist />
         </div>
       </div>
+      {alert.type === "DELETED_WISHLIST" && !alert.error ? (
+        <SnackBar open={true} message={alert.msg} />
+      ) : (
+        <div />
+      )}
+      {alert.type === "DELETED_WISHLIST" && alert.error === true ? (
+        <SnackBarError open={true} message={alert.msg} />
+      ) : (
+        <div />
+      )}
     </div>
   );
 }

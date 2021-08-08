@@ -5,7 +5,8 @@ const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 function authrization(req, res, next) {
   try {
-    const token = req.cookies.token;
+    const token = req.cookies.accessToken;
+    console.log(token);
     if (!token)
       return res.status(401).json({ status: "error", message: "Unauthorized" });
 
@@ -14,7 +15,7 @@ function authrization(req, res, next) {
 
     next();
   } catch (err) {
-   return res.status(401).json({ status: "error", message: "Unauthorized" });
+    return res.status(401).json({ status: "error", message: "Unauthorized" });
   }
 }
 

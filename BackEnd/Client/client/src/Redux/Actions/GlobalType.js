@@ -6,6 +6,7 @@ export const GLOBALTYPES = {
   LOADING_ON: "LOADING_ON",
   LOADING_OFF: "LOADING_OFF",
   LOGOUT: "LOGOUT",
+  CURRENCY: "CURRENCY"
 };
 
 export const EditData = (data, id, post) => {
