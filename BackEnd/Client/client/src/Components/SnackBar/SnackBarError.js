@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
 
 function SnackBarError({ message }) {
   const [open, setOpen] = useState(true);
-  const classes = useStyles();
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {

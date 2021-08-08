@@ -1,6 +1,7 @@
 import { PostData, GetData } from "./../../Tools/APICalls";
 import { GLOBALTYPES } from "./GlobalType";
 import { AUTHTYPES } from "./../Reducer/AuthReducer";
+import { json } from "express";
 
 export const register = (UserData) => async (dispatch) => {
   dispatch({ type: GLOBALTYPES.LOADING_ON });
@@ -65,8 +66,8 @@ export const VerifIsLoggedIn = () => async (dispatch) => {
       });
      
     });
-};
-export const Logout = () => async (dispatch) => {
+  };
+  export const Logout = () => async (dispatch) => {
   console.log("logout action");
   await PostData("logout").then((res) => {
     console.log(res);

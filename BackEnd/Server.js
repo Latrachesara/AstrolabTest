@@ -6,14 +6,16 @@ const cors = require("cors");
 const AuthRoute = require("./routers/AuthRoute");
 const UserRoute = require("./routers/UserRoute");
 const WishlistRoute = require("./routers/WishlistRoute");
+const ProductRoute = require("./routers/ProductRoute");
 const port = process.env.PORT || 4000;
 app.use(express());
-app.use(cors({origin: true, credentials: true}));
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(AuthRoute);
 app.use(UserRoute);
 app.use(WishlistRoute);
+app.use(ProductRoute);
 app.listen(port, () => {
   console.log(`server running on port : ${port}`);
 });

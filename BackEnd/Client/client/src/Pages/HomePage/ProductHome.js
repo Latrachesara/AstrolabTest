@@ -19,5 +19,4 @@ function ProductHome() {
     </div>
   );
 }
-
 export default ProductHome;

@@ -11,7 +11,6 @@ function Router() {
         <Route exact path="/" component={Home} />
         <Route exact path="/productHome" component={ProductHome} />
         <Route path="/loading" component={LoadingComponent} />
-
         <Route component={NotFound} />
       </Switch>
     </div>

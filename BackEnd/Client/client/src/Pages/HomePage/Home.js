@@ -37,11 +37,9 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -116,7 +114,6 @@ function Home() {
               </center>
             </div>
           </div>
-
           <NavWishlist />
           <Productlist />
         </div>
@@ -124,5 +121,4 @@ function Home() {
     </div>
   );
 }
-
 export default Home;
